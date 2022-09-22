@@ -115,7 +115,6 @@ export default {
             for(var i=0;i<res.data.length;i++)
             {
               let item=res.data[i];
-              console.log(item);
               if(map.has(item.aspect))
               {
                 map.set(item.aspect,map.get(item.aspect)+1)
@@ -123,12 +122,8 @@ export default {
               else{
                 map.set(item.aspect,1);
               }
-
-              console.log(map);
             }
-
-            this.echartsInit(map.keys(),map.values())
-
+            this.echartsInit(Array.from(map.keys()),Array.from(map.values()))
           })
         }
             
