@@ -46,6 +46,7 @@
   <div class="ai-module-section ai-module-introduce">
     <div class="ai-module-header">功能演示</div>
     <div>
+      <el-button type="text" @click="handler">分析</el-button>
       <el-input
         type="textarea"
         :rows="4"
@@ -63,15 +64,12 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 
 
 export default {
   name: 'three',
-  mounted(){
-        // 在通过mounted调用即可
-        this.echartsInit()
-    },
   data() {
     return {
       textarea :''
@@ -79,19 +77,19 @@ export default {
   },
   methods: {
         //初始化echarts
-        echartsInit() {
+        echartsInit(a1,a2) {
             //柱形图
             //因为初始化echarts 的时候，需要指定的容器 id='main'
             this.$echarts.init(document.getElementById('main')).setOption({
                 xAxis: {
                     type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    data: a1
                 },
                 yAxis: {
                     type: 'value'
                 },
                 series: [{
-                    data: [120, 200, 150, 80, 70, 110, 130],
+                    data: a2,
                     type: 'bar',
                     showBackground: true,
                     backgroundStyle: {
@@ -99,6 +97,36 @@ export default {
                     }
                 }]
             })
+        },
+        handler()
+        {
+          axios({
+            url:'/rng/hello',
+            params:{
+              name : this.textarea
+            }
+          }).then(res=>{
+            console.log(res.data)
+            const map = new Map();
+            for(var i=0;i<res.data.length;i++)
+            {
+              let item=res.data[i];
+              console.log(item);
+              if(map.has(item.aspect))
+              {
+                map.set(item.aspect,map.get(item.aspect)+1)
+              }
+              else{
+                map.set(item.aspect,1);
+              }
+             
+            }
+              console.log(map.keys());
+              console.log(map.values());
+              this.echartsInit(map.keys(),map.values())
+              console.log(map);
+
+          })
         }
             
     }
