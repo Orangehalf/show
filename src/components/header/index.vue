@@ -9,7 +9,27 @@
         :key="item.title"
         @click="handleCommand(item)"
       >
-        {{ item.title }}
+        <el-dropdown class="fit" v-if="item.children" @command="handleCommand">
+          <span
+            class="el-dropdown-link fit menu-item-title"
+            style="display: inline-block"
+          >
+            {{ item.title }}
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item
+              :class="showTarget === child.path ? 'child-selected ' : ''"
+              v-for="child in item.children"
+              :key="child.path"
+              :command="{ child: true, data: child, parent: item.path }"
+              >{{ child.title }}</el-dropdown-item
+            >
+          </el-dropdown-menu>
+        </el-dropdown>
+        <span v-else class="menu-item-title">
+          {{ item.title }}
+        </span>
       </div>
     </div>
   </div>
@@ -23,18 +43,34 @@ export default {
     return {
       cpp: [],
       targetPath: "",
+      showTarget: "",
     };
   },
   methods: {
     init() {
-      this.cpp = path;
-      let end = location.hash.slice(-3);
-      this.targetPath = "/" + end;
+      this.cpp = path.filter((v) => !v.child);
+      let end = location.hash.split("#")[1];
+      if (end.indexOf("-") > 0) {
+        this.showTarget = end;
+        end = end.split("-")[0];
+      }
+      this.targetPath = end;
     },
     handleCommand(cpp) {
-      if(cpp.path === this.targetPath) return
-      this.targetPath = cpp.path;
-      this.$router.push(cpp.path);
+      if (cpp.path === this.targetPath) return;
+      if (cpp.children) return;
+
+      if (cpp.child) {
+        if (this.showTarget === cpp.data.path) return;
+        this.targetPath = cpp.parent;
+        this.showTarget = cpp.data.path;
+        this.$router.push(cpp.data.path);
+      } else {
+        this.targetPath = cpp.path;
+        this.showTarget = "";
+        this.$router.push(cpp.path);
+      }
+      return;
     },
   },
   mounted() {
@@ -59,12 +95,27 @@ export default {
   width: 100px;
   text-align: center;
   position: relative;
+  user-select: none;
+}
+.menu-item-title {
+  font-size: 14px;
+  color: #606266;
+  user-select: none;
+}
+.menu-item-title:hover {
+  color: #67c23a;
 }
 .selected {
   border-top: 2px solid #ccc;
   border-bottom: 2px solid #ccc;
 }
-
+.selected .menu-item-title {
+  color: #409eff;
+}
+.child-selected {
+  color: #66b1ff;
+  background-color: #ecf5ff;
+}
 .menu-item-hover::before,
 .menu-item-hover::after {
   content: "";
