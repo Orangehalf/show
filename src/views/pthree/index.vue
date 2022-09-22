@@ -70,6 +70,10 @@ import axios from 'axios';
 
 export default {
   name: 'three',
+  mounted(){
+        // 在通过mounted调用即可
+        this.echartsInit()
+    },
   data() {
     return {
       textarea :''
@@ -77,19 +81,19 @@ export default {
   },
   methods: {
         //初始化echarts
-        echartsInit(a1,a2) {
+        echartsInit(a,b) {
             //柱形图
             //因为初始化echarts 的时候，需要指定的容器 id='main'
             this.$echarts.init(document.getElementById('main')).setOption({
                 xAxis: {
                     type: 'category',
-                    data: a1
+                    data: a,
                 },
                 yAxis: {
                     type: 'value'
                 },
                 series: [{
-                    data: a2,
+                    data: b,
                     type: 'bar',
                     showBackground: true,
                     backgroundStyle: {
@@ -119,12 +123,11 @@ export default {
               else{
                 map.set(item.aspect,1);
               }
-             
-            }
-              console.log(map.keys());
-              console.log(map.values());
-              this.echartsInit(map.keys(),map.values())
+
               console.log(map);
+            }
+
+            this.echartsInit(map.keys(),map.values())
 
           })
         }
