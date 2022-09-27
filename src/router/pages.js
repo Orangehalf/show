@@ -6,10 +6,10 @@ export default [
     name: "home",
   },
   {
-    title: "第一个页面",
+    title: "评论分析",
     component: () => import("../views/pone"),
-    path: "/one",
-    name: "one",
+    path: "/commentAnalysis",
+    name: "commentAnalysis",
   },
   {
     title: "第二个页面",
