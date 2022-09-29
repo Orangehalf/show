@@ -7,7 +7,7 @@
         </div>
         <div class="chaertlabel">
           <div class="chaertlabel_item1 inlineblock" style="margin-left:40px;">2022/10</div>
-          <div class="chaertlabel_item1 inlineblock " style="margin-right:40px;float:right">当期数据量</div>
+          <div class="chaertlabel_item1 inlineblock " style="margin-right:40px;float:right">{{totalnum}}</div>
         </div>
       </div>
       <div class="item2">
@@ -132,7 +132,7 @@
       </div>
       <div class="box3">
         <div class="aspect_title">
-         Flexible Learnings
+          Flexible Learnings
         </div>
         <el-button type="primary" style="margin:30px 20%;">新增主题类别</el-button>
         <el-button type="primary" style="margin-left:20%;">手动维护样本库</el-button>
@@ -146,6 +146,7 @@
 <script>
 import * as res from './javasctipt/request'; //注意路径
 
+
 export default {
   name: 'commentAnalysis',
   mounted() {
@@ -154,6 +155,282 @@ export default {
   },
   data() {
     return {
+      totalnum: '',
+      mychart1: null,
+      option1: {
+        title: {
+          text: 'Overview',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        series: [
+          {
+            type: 'pie',
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '28',
+                fontWeight: 'bold',
+                formatter: '{d}%' //只要百分比
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: this.chart1
+
+          }
+        ]
+      },
+      chart1: [],
+      mychart2: null,
+      option2: {
+        title: {
+          text: 'Top 10 Positive Aspects',
+          x: 'center',
+          y: 20,
+          textStyle: {
+            fontSize: 12
+          }
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        color: ['#FFD384']
+        ,
+        xAxis: {
+          type: 'category',
+          data: [],
+          axisLabel: {
+            interval: 0
+          }
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            data: [],
+            type: 'bar'
+          }
+        ]
+      },
+      chart2: [],
+      mychart3: null,
+      chart3: [],
+      option3: {
+        title: {
+          text: 'Top 10 Negative Aspects',
+          x: 'center',
+          y: 20,
+          textStyle: {
+            fontSize: 12
+          }
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        color: ['#5EDDE0'],
+        xAxis: {
+          type: 'category',
+          data: [],
+          axisLabel: {
+            interval: 0
+          }
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            data: [],
+            type: 'bar'
+          }
+        ]
+      },
+      mychart4: null,
+      chart4: [],
+      option4: {
+        title: {
+          text: 'Topic view',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            // Use axis to trigger tooltip
+            type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
+          },
+          formatter: '{c}%'
+
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'value',
+          max: 100
+        },
+        yAxis: {
+          type: 'category',
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          data: []
+        },
+
+        series: [
+          {
+            showBackground: true,
+            backgroundStyle: {
+              color: 'rgba(180, 180, 180, 0.2)'
+            },
+            name: 'Direct',
+            type: 'bar',
+            stack: 'total',
+            label: {
+              show: true,
+              formatter: '{c}%'
+            },
+            emphasis: {
+              focus: 'series'
+            },
+            data: []
+          }
+        ]
+      },
+      mychart5_1: null,
+      mychart5_2: null,
+      mychart5_3: null,
+      mychart5_4: null,
+      mychart5_5: null,
+      option5_1: {
+        tooltip: {
+          trigger: 'item'
+        },
+        series: [
+          {
+            type: 'pie',
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+              show: false,
+              position: 'center'
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+             
+            ]
+          }
+        ]
+      },
+      option5_2: {
+        tooltip: {
+          trigger: 'item'
+        },
+        series: [
+          {
+            type: 'pie',
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+              show: false,
+              position: 'center'
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+             
+            ]
+          }
+        ]
+      },
+      option5_3: {
+        tooltip: {
+          trigger: 'item'
+        },
+        series: [
+          {
+            type: 'pie',
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+              show: false,
+              position: 'center'
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+             
+            ]
+          }
+        ]
+      },
+      option5_4: {
+        tooltip: {
+          trigger: 'item'
+        },
+        series: [
+          {
+            type: 'pie',
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+              show: false,
+              position: 'center'
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+             
+            ]
+          }
+        ]
+      },
+      option5_5: {
+        tooltip: {
+          trigger: 'item'
+        },
+        series: [
+          {
+            type: 'pie',
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+              show: false,
+              position: 'center'
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+             
+            ]
+          }
+        ]
+      },
+
+
+      chart5: [],
       options: [{
         value: '选项1',
         label: '黄金糕'
@@ -172,223 +449,125 @@ export default {
       }],
       value: '',
       tableData: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-08',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-06',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }]
+        date: '2016-05-03',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }, {
+        date: '2016-05-02',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }, {
+        date: '2016-05-04',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }, {
+        date: '2016-05-01',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }, {
+        date: '2016-05-08',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }, {
+        date: '2016-05-06',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }, {
+        date: '2016-05-07',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }],
+
     }
   },
   methods: {
     echartsInit() {
-      this.$echarts.init(this.$refs.chart1).setOption(option1);
-      this.$echarts.init(this.$refs.chart2).setOption(option2);
-      this.$echarts.init(this.$refs.chart3).setOption(option3);
-      let mychart = this.$echarts.init(this.$refs.chart4);
-      mychart.setOption(option4);
-      mychart.on('click', function (params) {
-        console.log(params);
-      });
-      this.$echarts.init(this.$refs.chart5_1).setOption(option5);
-      this.$echarts.init(this.$refs.chart5_2).setOption(option5);
-      this.$echarts.init(this.$refs.chart5_3).setOption(option5);
-      this.$echarts.init(this.$refs.chart5_4).setOption(option5);
-      this.$echarts.init(this.$refs.chart5_5).setOption(option5);
+      this.mychart1 = this.$echarts.init(this.$refs.chart1);
+      this.mychart1.setOption(this.option1);
+
+      this.mychart2 = this.$echarts.init(this.$refs.chart2);
+      this.mychart2.setOption(this.option2)
+
+      this.mychart3 = this.$echarts.init(this.$refs.chart3);
+      this.mychart3.setOption(this.option3)
+
+      this.mychart4 = this.$echarts.init(this.$refs.chart4);
+      this.mychart4.setOption(this.option4);
+      //  mychart.on('click', function (params) {
+      //   console.log(params);
+      // });
+      this.mychart5_1 = this.$echarts.init(this.$refs.chart5_1);
+      this.mychart5_1.setOption(this.option5_1);
+      this.mychart5_2 = this.$echarts.init(this.$refs.chart5_2);
+      this.mychart5_2.setOption(this.option5_2);
+      this.mychart5_3 = this.$echarts.init(this.$refs.chart5_3);
+      this.mychart5_3.setOption(this.option5_3);
+      this.mychart5_4 = this.$echarts.init(this.$refs.chart5_4);
+      this.mychart5_4.setOption(this.option5_4);
+      this.mychart5_5 = this.$echarts.init(this.$refs.chart5_5);
+      this.mychart5_5.setOption(this.option5_5);
+
       this.$echarts.init(this.$refs.chart6_1).setOption(option6);
       this.$echarts.init(this.$refs.chart6_2).setOption(option6);
       this.$echarts.init(this.$refs.chart6_3).setOption(option6);
       this.$echarts.init(this.$refs.chart7).setOption(option7);
-    },
-    requestInit()
-    {
-       res.getChart1();
+      res.getChart1().then(response => {
+        let one = response.chartOne
+        this.totalnum = one.total;
+        this.chart1[0] = {
+          value: one.postiveNum,
+          name: 'positive'
+        }
+        this.chart1[1] = {
+          value: one.nagetiveNum,
+          name: 'negative'
+        }
+        this.option1.series[0].data = this.chart1
+        this.mychart1.setOption(this.option1);
+
+        let two = response.chartTwo;
+        this.chart2 = two;
+        this.option2.series[0].data = this.chart2;
+        this.option2.xAxis.data = getArray(two);
+        this.mychart2.setOption(this.option2);
+
+        let three = response.chartThree;
+        this.chart3 = three;
+        this.option3.series[0].data = this.chart3;
+        this.option3.xAxis.data = getArray(three);
+        this.mychart3.setOption(this.option3);
+
+        let four = response.chartFour;
+        this.chart4 = four;
+        this.option4.series[0].data = this.chart4;
+        this.option4.yAxis.data = getArray(four);
+        this.mychart4.setOption(this.option4);
+
+        let five = response.chartFive;
+        this.chart5 = five;
+        console.log(this.chart5);
+
+
+      });
     }
   }
 
 
 };
 
-var option1 = {
-  title: {
-    text: 'Overview',
-    left: 'center'
-  },
-  tooltip: {
-    trigger: 'item'
-  },
-  series: [
-    {
-      type: 'pie',
-      radius: ['40%', '70%'],
-      avoidLabelOverlap: false,
-      label: {
-        show: false,
-        position: 'center'
-      },
-      labelLine: {
-        show: false
-      },
-      data: [
-        { value: 1048, name: 'Search Engine' },
-        { value: 735, name: 'Direct' }
-      ]
-    }
-  ]
+
+function getArray(list) {
+  var c = []
+  list.forEach((item) => { c.push(item.name) })
+  return c;
 }
 
-var option2 = {
-  title: {
-    text: 'Top 10 Positive Aspects',
-    x: 'center',
-    y: 20,
-    textStyle: {
-      fontSize: 12
-    }
-  },
-  color: ['#FFD384']
-  ,
-  xAxis: {
-    type: 'category',
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  },
-  yAxis: {
-    type: 'value'
-  },
-  series: [
-    {
-      data: [120, 200, 150, 80, 70, 110, 130],
-      type: 'bar'
-    }
-  ]
-}
 
-var option3 = {
-  title: {
-    text: 'Top 10 Negative Aspects',
-    x: 'center',
-    y: 20,
-    textStyle: {
-      fontSize: 12
-    }
-  },
-  color: ['#5EDDE0'],
-  xAxis: {
-    type: 'category',
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  },
-  yAxis: {
-    type: 'value'
-  },
-  series: [
-    {
-      data: [120, 200, 150, 80, 70, 110, 130],
-      type: 'bar'
-    }
-  ]
-}
 
-var option4 = {
-  title: {
-    text: 'Topic view',
-    left: 'center'
-  },
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: {
-      // Use axis to trigger tooltip
-      type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
-    },
-    formatter: '{c}%'
 
-  },
-  grid: {
-    left: '3%',
-    right: '4%',
-    bottom: '3%',
-    containLabel: true
-  },
-  xAxis: {
-    type: 'value',
-    max: 100
-  },
-  yAxis: {
-    type: 'category',
-    axisLine: {
-      show: false
-    },
-    axisTick: {
-      show: false
-    },
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  },
 
-  series: [
-    {
-      showBackground: true,
-      backgroundStyle: {
-        color: 'rgba(180, 180, 180, 0.2)'
-      },
-      name: 'Direct',
-      type: 'bar',
-      stack: 'total',
-      label: {
-        show: true,
-        formatter: '{c}%'
-      },
-      emphasis: {
-        focus: 'series'
-      },
-      data: [32, 30, 30, 33, 39, 33, 32]
-    }
-  ]
-};
 
-var option5 = {
-  tooltip: {
-    trigger: 'item'
-  },
-  series: [
-    {
-      type: 'pie',
-      radius: ['40%', '70%'],
-      avoidLabelOverlap: false,
-      label: {
-        show: false,
-        position: 'center'
-      },
-      labelLine: {
-        show: false
-      },
-      data: [
-        { value: 1048, name: 'Search Engine' },
-        { value: 735, name: 'Direct' }
-      ]
-    }
-  ]
-}
+
 
 var option6 = {
   color: ['#5EDDE0'],

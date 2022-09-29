@@ -1,10 +1,9 @@
 import axios from 'axios';
 export function getChart1()
 {
-    axios({
-        url:'/dashboard/getCharts.htm'
+   return axios({
+        url:'/proxy/dashboard/getCharts.htm'
       }).then(res=>{
-        console.log(res.data)
-        return res.data
+        return res.data.data;
       })
 }
