@@ -6,6 +6,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './assets/styles/flex.css';
 import  * as  echarts from 'echarts';
 import axios from 'axios';
+import "./assets/css/index.css";
 Vue.config.productionTip = false
 Vue.prototype.$echarts = echarts
 Vue.prototype.$axios = axios
