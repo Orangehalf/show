@@ -12,24 +12,22 @@
       </div>
       <div class="item2">
         <div class="aspect_title">
-          Aspect view
+          情感分析-主题视角
         </div>
         <div class="module2">
-          <div class="chart2" ref="chart2">
+          <div class="chart2" ref="chart4_1">
           </div>
-          <div class="chart2" ref="chart3">
+          <div class="chart2" ref="chart4">
           </div>
         </div>
 
       </div>
     </div>
-    <div class="line1 space" style="height:525px">
-      <div class="item1" ref="chart4">
-      </div>
-      <div class="item2">
-        <h4>Comment analysis by topics</h4>
+    <div class="line1" style="height:525px;margin-top:1px;">
+      <div class="item2" style="width:99%;margin-left:0">
+        <h4>主题视角分析-当前主题下的深度挖掘</h4>
         <div class="top5">
-          <h4>Top 5 aspects for this topic</h4>
+          <h4>TOP 5的aspects-情感分析</h4>
           <ul>
             <li class="piecharts" ref="chart5_1"></li>
             <li class="piecharts" ref="chart5_2"></li>
@@ -40,41 +38,50 @@
         </div>
 
         <div class="details">
-          <h4>Opinion details for top 3 aspects</h4>
+          <h4>TOP 5的aspects-观点抽取</h4>
           <ul>
             <li class="barcharts" ref="chart6_1"></li>
             <li class="barcharts" ref="chart6_2"></li>
             <li class="barcharts" ref="chart6_3"></li>
+            <li class="barcharts" ref="chart6_4"></li>
+            <li class="barcharts" ref="chart6_5"></li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="line1 space" style="height:200px">
-      <div class="item1">
+    <div class="line1" style="height:220px;margin-top:1px;">
+      <div class="item3">
+
         <h4 class="chart_title">
-          Customizing Statistic
+          关键词视角分析
         </h4>
-        <div class="select">
-          <span style="margin-left:20px">Keyword:</span>
-          <el-select v-model="value" placeholder="请选择" style="margin-left:30px">
-            <el-option v-for="item in keywords" :key="item.value" :label="item.label" :value="item.label">
-            </el-option>
-          </el-select>
-          <el-button type="primary" @click="drawChart" style="float:right;margin-top:20px;margin-right:20px;">Query
-          </el-button>
+        <h5 style="text-align:center">与关键词相关的观点抽取和情感分析</h5>
+        <div style="width:40%;float:left">
+          <div class="select">
+            <span style="margin-left:20px">Keyword:</span>
+            <el-select v-model="value" placeholder="请选择" style="margin-left:30px">
+              <el-option v-for="item in keywords" :key="item.value" :label="item.label" :value="item.label">
+              </el-option>
+            </el-select>
+            <el-button type="primary" @click="drawChart" style="margin-top:5%;margin-right:10%;float:right">Query
+            </el-button>
+          </div>
+          <div>
+
+          </div>
         </div>
-        <div>
+        <div class="box4" ref="chart7">
 
         </div>
-      </div>
-      <div class="box2" ref="chart7">
-
       </div>
       <div class="box3">
         <div class="aspect_title">
-          Info extraction via Q&A
+          Q&A 信息抽取
         </div>
-        <div class="select">
+        <h6 style="text-align:center;margin-top:10px;font-weight:400;">
+          对抽取出的观点进行深入挖掘
+        </h6>
+        <div class="select" style="margin-top:30px">
           <el-select v-model="questionSelect" placeholder="请选择" size="mini"
             style="width:50%;margin-left:15%;float:left">
             <el-option v-for="item in questions" :key="item.value" :label="item.label" :value="item.label">
@@ -93,34 +100,43 @@
         </div>
       </div>
     </div>
-    <div class="line1 space" style="height:200px">
-      <div class="item1">
+    <div class="line1" style="height:130px;margin-top:1px;">
+      <div class="item1" style="width:99%">
         <div class="aspect_title">
-          Sample library statistics
+          模型训练和迭代
         </div>
-        <div style="margin:20px auto;height:70px;width:300px;border:1px solid black;border-radius:4px;">
-          <div style="width:140px;float:left;text-align:center;margin:15px 5px">
-            <p>当期模型已完成</p>
-            <p style="color:#03A213">13099条</p>
+        <div class="flexbox">
+          <div style="margin:20px;height:70px;width:300px;border:1px solid black;border-radius:4px;float:left">
+            <div style="width:140px;float:left;text-align:center;margin:15px 5px">
+              <p>当期模型已完成</p>
+              <p style="color:#03A213">13099条</p>
+            </div>
+            <div
+              style="width:140px;float:left;text-align:center;margin:15px 5px;background-color:#FFDF25;box-shadow: 5px 5px 5px #888888;float:left">
+              <p>待人工审核样本数</p>
+              <p style="color:#A11F14">145条</p>
+            </div>
           </div>
-          <div
-            style="width:140px;float:left;text-align:center;margin:15px 5px;background-color:#FFDF25;box-shadow: 5px 5px 5px #888888;">
-            <p>待人工审核样本数</p>
-            <p style="color:#A11F14">145条</p>
-          </div>
-        </div>
-        <div style="margin:20px auto;height:70px;width:300px;">
-          <div style="width:160px;float:left;text-align:center;margin:15px 5px">
+
+          <div style="float:left;text-align:center;margin:35px 5px">
             <p style=" background-color: #D7D7D7;">当期手动标注已完成</p>
             <p>34</p>
           </div>
-          <div style="width:120px;float:left;text-align:center;margin:15px 5px;">
+          <div style="float:left;text-align:center;margin:35px 5px;">
             <p style=" background-color: #D7D7D7;">样本库总数量</p>
             <p>256</p>
           </div>
+
+          <div>
+            <el-button type="primary" @click="dialog.grid2.dialogTableVisible = true"
+              style="float:right;margin-top:35px">新增主题类别
+            </el-button>
+          </div>
+
+
         </div>
       </div>
-      <div class="box2">
+      <!-- <div class="box2">
         <div class="aspect_title">
           Analysis result display
         </div>
@@ -138,15 +154,14 @@
           :current-page="currentPage" :page-size="10" layout=" prev, pager, next" :total=totalCount>
         </el-pagination>
 
-      </div>
-      <div class="box3">
+      </div> -->
+      <!-- <div class="box3">
         <div class="aspect_title">
           Flexible Learnings
         </div>
-        <el-button type="primary" @click="dialog.grid2.dialogTableVisible = true" style="margin:30px 0 30px 30%;">新增主题类别
-        </el-button>
+     
         <el-button type="primary" style="margin-left:30%;">手动维护样本库</el-button>
-      </div>
+      </div> -->
     </div>
 
 
@@ -252,13 +267,16 @@ export default {
 
       option1: {
         title: {
-          text: 'Overview',
-          left: 'center'
+          text: '情感分析 - 总体',
+          left: 'left',
+          top: 10
         },
         legend: {
-          orient: 'vertical',
-          right: 'right',
-          top: 'center',
+          orient: 'horizontal',
+          right: 'center',
+          top: 'bottom',
+          icon: 'circle'
+
         },
         tooltip: {
           trigger: 'item'
@@ -269,19 +287,10 @@ export default {
             radius: ['40%', '70%'],
             avoidLabelOverlap: false,
             label: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              label: {
+              normal: {
                 show: true,
-                fontSize: '28',
-                fontWeight: 'bold',
-                formatter: '{d}%' //只要百分比
+                formatter: '{b}:{c}' + '\n\r' + '({d}%)'
               }
-            },
-            labelLine: {
-              show: false
             },
             data: this.chart1
 
@@ -357,10 +366,6 @@ export default {
       mychart4: null,
       chart4: [],
       option4: {
-        title: {
-          text: 'Topic view',
-          left: 'center'
-        },
         legend: {
           top: 40
         },
@@ -417,6 +422,47 @@ export default {
             data: [],
             barWidth: 25,
             color: ['#FFB8D9']
+          }
+        ]
+      },
+
+      mychart4_1: null,
+      chart4_1: [],
+      option4_1: {
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'value',
+        },
+        yAxis: {
+          type: 'category',
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          data: []
+        },
+
+        series: [
+          {
+            name: 'Positive',
+            type: 'bar',
+            stack: 'total',
+            label: {
+              show: true,
+            },
+            emphasis: {
+              focus: 'series'
+            },
+            data: [],
+            barWidth: 25,
+            color: ['#0088FF'],
           }
         ]
       },
@@ -580,6 +626,8 @@ export default {
       mychart6_1: null,
       mychart6_2: null,
       mychart6_3: null,
+      mychart6_4: null,
+      mychart6_5: null,
       option6_1: {
         title: {
           text: '',
@@ -595,9 +643,10 @@ export default {
           containLabel: true
         },
         tooltip: {
-          trigger: 'item'
+          trigger: 'item',
+          formatter: '{c}%'
         },
-        color: ['#5EDDE0'],
+        color: ['#0088FF'],
         xAxis: {
           type: 'category',
           data: [],
@@ -606,7 +655,11 @@ export default {
           }
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          axisLabel: {
+            show: true,
+            formatter: '{value}%'  //y轴数值，带百分号
+          },
         },
         series: [
           {
@@ -625,14 +678,15 @@ export default {
           }
         },
         tooltip: {
-          trigger: 'item'
+          trigger: 'item',
+          formatter: '{c}%'
         },
         grid:
         {
           bottom: 0,
           containLabel: true
         },
-        color: ['#5EDDE0'],
+        color: ['#0088FF'],
         xAxis: {
           type: 'category',
           axisLabel: {
@@ -641,7 +695,11 @@ export default {
           data: []
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          axisLabel: {
+            show: true,
+            formatter: '{value}%'  //y轴数值，带百分号
+          },
         },
         series: [
           {
@@ -665,9 +723,10 @@ export default {
           containLabel: true
         },
         tooltip: {
-          trigger: 'item'
+          trigger: 'item',
+          formatter: '{c}%'
         },
-        color: ['#5EDDE0'],
+        color: ['#0088FF'],
         xAxis: {
           type: 'category',
           axisLabel: {
@@ -676,7 +735,91 @@ export default {
           data: []
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          axisLabel: {
+            show: true,
+            formatter: '{value}%'  //y轴数值，带百分号
+          },
+        },
+        series: [
+          {
+            data: [],
+            type: 'bar'
+          }
+        ]
+      },
+      option6_4: {
+        title: {
+          text: '',
+          x: 'center',
+          y: 20,
+          textStyle: {
+            fontSize: 12
+          }
+        },
+        grid:
+        {
+          bottom: 0,
+          containLabel: true
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{c}%'
+        },
+        color: ['#0088FF'],
+        xAxis: {
+          type: 'category',
+          axisLabel: {
+            interval: 0
+          },
+          data: []
+        },
+        yAxis: {
+          type: 'value',
+          axisLabel: {
+            show: true,
+            formatter: '{value}%'  //y轴数值，带百分号
+          },
+        },
+        series: [
+          {
+            data: [],
+            type: 'bar'
+          }
+        ]
+      },
+      option6_5: {
+        title: {
+          text: '',
+          x: 'center',
+          y: 20,
+          textStyle: {
+            fontSize: 12
+          }
+        },
+        grid:
+        {
+          bottom: 0,
+          containLabel: true
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{c}%'
+        },
+        color: ['#0088FF'],
+        xAxis: {
+          type: 'category',
+          axisLabel: {
+            interval: 0
+          },
+          data: []
+        },
+        yAxis: {
+          type: 'value',
+          axisLabel: {
+            show: true,
+            formatter: '{value}%'  //y轴数值，带百分号
+          },
         },
         series: [
           {
@@ -690,15 +833,15 @@ export default {
       chart7: [],
       option7: {
         title: {
-          text: 'Customizing view',
+          text: '关键词对应的Top-10观点',
           x: 'center',
           textStyle: {
-            fontSize: 16
+            fontSize: 12
           }
         },
         grid:
         {
-          bottom: 0,
+          bottom: 60,
           containLabel: true
         },
         color: ['#FFD384']
@@ -784,14 +927,17 @@ export default {
       this.mychart1 = this.$echarts.init(this.$refs.chart1);
       this.mychart1.setOption(this.option1);
 
-      this.mychart2 = this.$echarts.init(this.$refs.chart2);
-      this.mychart2.setOption(this.option2)
+      // this.mychart2 = this.$echarts.init(this.$refs.chart2);
+      // this.mychart2.setOption(this.option2)
 
-      this.mychart3 = this.$echarts.init(this.$refs.chart3);
-      this.mychart3.setOption(this.option3)
+      // this.mychart3 = this.$echarts.init(this.$refs.chart3);
+      // this.mychart3.setOption(this.option3)
 
       this.mychart4 = this.$echarts.init(this.$refs.chart4);
       this.mychart4.setOption(this.option4);
+
+      this.mychart4_1 = this.$echarts.init(this.$refs.chart4_1);
+      this.mychart4_1.setOption(this.option4_1);
 
       this.mychart5_1 = this.$echarts.init(this.$refs.chart5_1);
       this.mychart5_1.setOption(this.option5_1);
@@ -810,6 +956,10 @@ export default {
       this.mychart6_2.setOption(this.option6_2);
       this.mychart6_3 = this.$echarts.init(this.$refs.chart6_3);
       this.mychart6_3.setOption(this.option6_3);
+      this.mychart6_4 = this.$echarts.init(this.$refs.chart6_4);
+      this.mychart6_4.setOption(this.option6_4);
+      this.mychart6_5 = this.$echarts.init(this.$refs.chart6_5);
+      this.mychart6_5.setOption(this.option6_5);
 
       this.mychart7 = this.$echarts.init(this.$refs.chart7);
       this.mychart7.setOption(this.option7);
@@ -819,35 +969,58 @@ export default {
         this.totalnum = one.total;
         this.chart1[0] = {
           value: one.postiveNum,
-          name: 'positive'
+          name: 'positive',
+          itemStyle: {
+            color: '#11BA5D'
+          }
+
         }
         this.chart1[1] = {
           value: one.nagetiveNum,
-          name: 'negative'
+          name: 'negative',
+          itemStyle: {
+            color: '#FA586D'
+          }
+
         }
         this.option1.series[0].data = this.chart1
         this.mychart1.setOption(this.option1);
 
-        let two = response.chartTwo;
-        this.chart2 = two;
-        this.option2.series[0].data = this.chart2;
-        this.option2.xAxis.data = getArray(two);
-        this.mychart2.setOption(this.option2);
+        // let two = response.chartTwo;
+        // this.chart2 = two;
+        // this.option2.series[0].data = this.chart2;
+        // this.option2.xAxis.data = getArray(two);
+        // this.mychart2.setOption(this.option2);
 
-        let three = response.chartThree;
-        this.chart3 = three;
-        this.option3.series[0].data = this.chart3;
-        this.option3.xAxis.data = getArray(three);
-        this.mychart3.setOption(this.option3);
+        // let three = response.chartThree;
+        // this.chart3 = three;
+        // this.option3.series[0].data = this.chart3;
+        // this.option3.xAxis.data = getArray(three);
+        // this.mychart3.setOption(this.option3);
 
         let four = response.chartFour;
         this.chart4 = four;
         this.option4.series[0].data = this.chart4;
         let temp = []
-        this.chart4.forEach((item) => { temp.push(100 - item.value) })
+        let temppn = []
+        let nntemp = []
+        let total = []
+        this.chart4.forEach((item) => {
+          temp.push(100 - item.value)
+          temppn.push(item.pn)
+          nntemp.push(item.nn)
+          total.push(item.pn + item.nn)
+        })
+
         this.option4.series[1].data = temp;
-        this.option4.yAxis.data = getArray(four);
+        let namearr = getArray(four)
+        this.option4.yAxis.data = namearr;
         this.mychart4.setOption(this.option4);
+
+        this.option4_1.series[0].data = total;
+        this.option4_1.yAxis.data = namearr;
+        this.mychart4_1.setOption(this.option4_1);
+
 
         let five = response.chartFive;
         this.chart5 = five;
@@ -868,6 +1041,31 @@ export default {
               reChartsSix(vue.option6_1, element, vue.mychart6_1, 0);
               reChartsSix(vue.option6_2, element, vue.mychart6_2, 1);
               reChartsSix(vue.option6_3, element, vue.mychart6_3, 2);
+              reChartsSix(vue.option6_4, element, vue.mychart6_4, 3);
+              reChartsSix(vue.option6_5, element, vue.mychart6_5, 4);
+            }
+          });
+
+        });
+
+        this.mychart4_1.on('click', function (params) {
+          vue.chart5.forEach((element) => {
+            if (element.label == params.name) {
+              reCharts(vue.option5_1, element, vue.mychart5_1, 0);
+              reCharts(vue.option5_2, element, vue.mychart5_2, 1);
+              reCharts(vue.option5_3, element, vue.mychart5_3, 2);
+              reCharts(vue.option5_4, element, vue.mychart5_4, 3);
+              reCharts(vue.option5_5, element, vue.mychart5_5, 4);
+            }
+          });
+
+          vue.chart6.forEach((element) => {
+            if (element.label == params.name) {
+              reChartsSix(vue.option6_1, element, vue.mychart6_1, 0);
+              reChartsSix(vue.option6_2, element, vue.mychart6_2, 1);
+              reChartsSix(vue.option6_3, element, vue.mychart6_3, 2);
+              reChartsSix(vue.option6_4, element, vue.mychart6_4, 3);
+              reChartsSix(vue.option6_5, element, vue.mychart6_5, 4);
             }
           });
 
@@ -897,6 +1095,8 @@ export default {
         reChartsSix(this.option6_1, this.chart6[this.chart6.length - 1], this.mychart6_1, 0);
         reChartsSix(this.option6_2, this.chart6[this.chart6.length - 1], this.mychart6_2, 1);
         reChartsSix(this.option6_3, this.chart6[this.chart6.length - 1], this.mychart6_3, 2);
+        reChartsSix(this.option6_4, this.chart6[this.chart6.length - 1], this.mychart6_4, 3);
+        reChartsSix(this.option6_5, this.chart6[this.chart6.length - 1], this.mychart6_5, 4);
 
         this.keywords = response.keywords;
         this.value = this.keywords[0].label;
@@ -1084,7 +1284,7 @@ export default {
 
   },
   created: function () {
-    this.getData(this.currentPage, this.PageSize)
+    // this.getData(this.currentPage, this.PageSize)
   }
 
 
