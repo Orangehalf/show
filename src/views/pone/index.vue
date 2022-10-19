@@ -12,7 +12,7 @@
       </div>
       <div class="item2">
         <div class="aspect_title">
-          情感分析-主题视角
+          Sentiment Anylysis in Topic View
         </div>
         <div class="module2">
           <div class="chart2" ref="chart4_1">
@@ -25,9 +25,9 @@
     </div>
     <div class="line1" style="height:525px;margin-top:1px;">
       <div class="item2" style="width:99%;margin-left:0">
-        <h4>主题视角分析-当前主题下的深度挖掘</h4>
+        <h4>Deep Dive in Sentiment Analysis for Topics</h4>
         <div class="top5">
-          <h4>TOP 5的aspects-情感分析</h4>
+          <h4>Sentimental Polarity for Top 5 Aspects</h4>
           <ul>
             <li class="piecharts" ref="chart5_1"></li>
             <li class="piecharts" ref="chart5_2"></li>
@@ -38,7 +38,7 @@
         </div>
 
         <div class="details">
-          <h4>TOP 5的aspects-观点抽取</h4>
+          <h4>Top 5 Opinions for Top 5 Aspects</h4>
           <ul>
             <li class="barcharts" ref="chart6_1"></li>
             <li class="barcharts" ref="chart6_2"></li>
@@ -53,9 +53,8 @@
       <div class="item3">
 
         <h4 class="chart_title">
-          关键词视角分析
+          Sentiment Anylysis in Keyword View
         </h4>
-        <h5 style="text-align:center">与关键词相关的观点抽取和情感分析</h5>
         <div style="width:40%;float:left">
           <div class="select">
             <span style="margin-left:20px">Keyword:</span>
@@ -76,11 +75,11 @@
       </div>
       <div class="box3">
         <div class="aspect_title">
-          Q&A 信息抽取
+          Information Extraction via Q&A
         </div>
-        <h6 style="text-align:center;margin-top:10px;font-weight:400;">
+        <!-- <h6 style="text-align:center;margin-top:10px;font-weight:400;">
           对抽取出的观点进行深入挖掘
-        </h6>
+        </h6> -->
         <div class="select" style="margin-top:30px">
           <el-select v-model="questionSelect" placeholder="请选择" size="mini"
             style="width:50%;margin-left:15%;float:left">
@@ -103,10 +102,25 @@
     <div class="line1" style="height:130px;margin-top:1px;">
       <div class="item1" style="width:99%">
         <div class="aspect_title">
-          模型训练和迭代
+          Model View : Training & Iteration
         </div>
         <div class="flexbox">
-          <div style="margin:20px;height:70px;width:300px;border:1px solid black;border-radius:4px;float:left">
+          <div class="xunlianbox">
+            <p>Total Trainning Sample</p>
+            <p class="num">120</p>
+          </div>
+
+          <div class="xunlianbox">
+            <p>Data Predicted for Current Period</p>
+            <p class="num">984</p>
+          </div>
+
+          <div class="xunlianbox">
+            <p>Total Data Predicted</p>
+            <p class="num">{{totalnum}}</p>
+          </div>
+
+          <!-- <div style="margin:20px;height:70px;width:300px;border:1px solid black;border-radius:4px;float:left">
             <div style="width:140px;float:left;text-align:center;margin:15px 5px">
               <p>当期模型已完成</p>
               <p style="color:#03A213">13099条</p>
@@ -125,13 +139,28 @@
           <div style="float:left;text-align:center;margin:35px 5px;">
             <p style=" background-color: #D7D7D7;">样本库总数量</p>
             <p>256</p>
-          </div>
+          </div> -->
 
           <div>
             <el-button type="primary" @click="dialog.grid2.dialogTableVisible = true"
-              style="float:right;margin-top:35px">新增主题类别
+              style="float:right;margin-top:35px">Sample Pool Maitence
             </el-button>
           </div>
+
+          <div class="rengongbox">
+            <p class="rengong">Manually Sample Review</p>
+            <div class="dangqi">
+              <div>
+                <p>Done</p>
+                <p class="blue">231</p>
+              </div>
+              <div class="grey">
+                <p>Todo</p>
+                <p class="blue">163</p>
+              </div>
+            </div>
+          </div>
+
 
 
         </div>
@@ -167,77 +196,77 @@
 
 
 
-    <el-dialog title="样本维护" @open="getData2" :visible.sync="dialog.grid2.dialogTableVisible">
-      <el-button type="primary" @click="dialog.form1.innerVisible = true">新增主题类别</el-button>
-      <el-button type="primary" @click="dialog.form2.display = true">新增样本</el-button>
+    <el-dialog title="Sample Pool Maitence" @open="getData2" :visible.sync="dialog.grid2.dialogTableVisible">
+      <el-button type="primary" @click="dialog.form1.innerVisible = true">New Topic Category</el-button>
+      <el-button type="primary" @click="dialog.form2.display = true">New Sample</el-button>
       <el-button type="warning" plain @click="openFullScreen1" v-loading.fullscreen.lock="fullscreenLoading"
-        element-loading-text="模型训练进行中，请耐心等待...">模型训练
+        element-loading-text="Model training is in progress, please wait patiently...">Training Model
       </el-button>
-      <el-dialog width="30%" title="新增主题类别" @close="resetForm('topicForm')" :visible.sync="dialog.form1.innerVisible"
+      <el-dialog width="30%" title="New Topic Category" @close="resetForm('topicForm')" :visible.sync="dialog.form1.innerVisible"
         append-to-body>
         <el-form :model="dialog.form1.form" ref="topicForm">
-          <el-form-item label="主题类别名称:" :label-width="dialog.form1.formLabelWidth" prop="name">
+          <el-form-item label="Topic Name:" :label-width="dialog.form1.formLabelWidth" prop="name">
             <el-input v-model="dialog.form1.form.name" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="resetForm('topicForm')">取 消</el-button>
-          <el-button type="primary" @click="addClass">确 定</el-button>
+          <el-button @click="resetForm('topicForm')">cancel</el-button>
+          <el-button type="primary" @click="addClass">confirm</el-button>
         </div>
       </el-dialog>
 
 
-      <el-dialog title="新增样本" @open=datainit @close="resetForm2('dynamicValidateForm')"
+      <el-dialog title="New Sample" @open=datainit @close="resetForm2('dynamicValidateForm')"
         :visible.sync="dialog.form2.display" append-to-body>
         <el-form :model="dialog.form2.dynamicValidateForm" ref="dynamicValidateForm" label-width="100px"
           :rules="dialog.form2.rules" class="demo-dynamic">
-          <el-form-item label="选择主题" prop="topic">
-            <el-select v-model="dialog.form2.dynamicValidateForm.topic" placeholder="请选择主题">
+          <el-form-item label="topic" prop="topic">
+            <el-select v-model="dialog.form2.dynamicValidateForm.topic" placeholder="">
               <el-option v-for="item in dialog.form2.topics" :key="item.value" :label="item.label" :value="item.label">
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item v-for="(domain, index) in dialog.form2.dynamicValidateForm.domains" :label="'样本' + index"
+          <el-form-item v-for="(domain, index) in dialog.form2.dynamicValidateForm.domains" :label="'sample' + index"
             :key="domain.key" :prop="'domains.' + index + '.value'" :rules="{
-              required: true, message: '样本不能为空', trigger: 'blur'
+              required: true, message: 'The sample can\'t be empty', trigger: 'blur'
             }">
             <el-input v-model="domain.value" style="width:80%"></el-input>
-            <el-button style="margin-left:5%" @click.prevent="removeDomain(domain)">删除</el-button>
+            <el-button style="margin-left:5%" @click.prevent="removeDomain(domain)">delete</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('dynamicValidateForm')">提交</el-button>
-            <el-button @click="addDomain">新增样本</el-button>
-            <el-button @click="resetForm2('dynamicValidateForm')">重置</el-button>
+            <el-button type="primary" @click="submitForm('dynamicValidateForm')">submit</el-button>
+            <el-button @click="addDomain">new sample</el-button>
+            <el-button @click="resetForm2('dynamicValidateForm')">reset</el-button>
           </el-form-item>
         </el-form>
       </el-dialog>
 
       <el-table :data="dialog.grid2.gridData" max-height="600">
-        <el-table-column property="sample" label="样本" width="600"></el-table-column>
-        <el-table-column property="topic" label="主题" width="200"></el-table-column>
-        <el-table-column fixed="right" label="操作" width="100">
+        <el-table-column property="sample" label="sample" width="600"></el-table-column>
+        <el-table-column property="topic" label="topic" width="200"></el-table-column>
+        <el-table-column fixed="right" label="operation" width="100">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
+            <el-button @click="handleClick(scope.row)" type="text" size="small">edit</el-button>
           </template>
         </el-table-column>
       </el-table>
 
-      <el-dialog title="编辑样本" @open=datainit :visible.sync="dialog.form3.display" append-to-body>
+      <el-dialog title="edit" @open=datainit :visible.sync="dialog.form3.display" append-to-body>
         <el-form :model="dialog.form3.form" ref="form3" label-width="100px" :rules="dialog.form2.rules"
           class="demo-dynamic">
-          <el-form-item label="选择主题" prop="topic">
-            <el-select v-model="dialog.form3.form.topic" placeholder="请选择主题">
+          <el-form-item label="topic" prop="topic">
+            <el-select v-model="dialog.form3.form.topic" placeholder="">
               <el-option v-for="item in dialog.form2.topics" :key="item.value" :label="item.label" :value="item.label">
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="样本" prop="sample" :rules="{
-            required: true, message: '样本不能为空', trigger: 'blur'
+          <el-form-item label="sample" prop="sample" :rules="{
+            required: true, message: 'The sample can\'t be empty', trigger: 'blur'
           }">
             <el-input v-model="dialog.form3.form.sample" style="width:80%"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="update('form3')">提交</el-button>
+            <el-button type="primary" @click="update('form3')">submit</el-button>
           </el-form-item>
         </el-form>
       </el-dialog>
@@ -267,7 +296,7 @@ export default {
 
       option1: {
         title: {
-          text: '情感分析 - 总体',
+          text: 'Sentiment Anylysis Overview',
           left: 'left',
           top: 10
         },
@@ -279,7 +308,8 @@ export default {
 
         },
         tooltip: {
-          trigger: 'item'
+          trigger: 'item',
+          formatter: '{b}:&nbsp;&nbsp;&nbsp;&nbsp;{d}%'
         },
         series: [
           {
@@ -473,7 +503,8 @@ export default {
       mychart5_5: null,
       option5_1: {
         tooltip: {
-          trigger: 'item'
+          trigger: 'item',
+          formatter: '{b}:&nbsp;&nbsp;&nbsp;&nbsp;{d}%'
         },
         title: {
           text: '',
@@ -486,11 +517,11 @@ export default {
         series: [
           {
             type: 'pie',
-            radius: ['70%', '90%'],
+            radius: ['60%', '90%'],
             avoidLabelOverlap: false,
             label: {
               show: false,
-              position: 'center'
+              position: 'center',
             },
             labelLine: {
               show: false
@@ -503,7 +534,8 @@ export default {
       },
       option5_2: {
         tooltip: {
-          trigger: 'item'
+          trigger: 'item',
+          formatter: '{b}:&nbsp;&nbsp;&nbsp;&nbsp;{d}%'
         },
         title: {
           text: '',
@@ -516,7 +548,7 @@ export default {
         series: [
           {
             type: 'pie',
-            radius: ['70%', '90%'],
+            radius: ['60%', '90%'],
             avoidLabelOverlap: false,
             label: {
               show: false,
@@ -541,12 +573,13 @@ export default {
           }
         },
         tooltip: {
-          trigger: 'item'
+          trigger: 'item',
+          formatter: '{b}:&nbsp;&nbsp;&nbsp;&nbsp;{d}%'
         },
         series: [
           {
             type: 'pie',
-            radius: ['70%', '90%'],
+            radius: ['60%', '90%'],
             avoidLabelOverlap: false,
             label: {
               show: false,
@@ -571,12 +604,13 @@ export default {
           }
         },
         tooltip: {
-          trigger: 'item'
+          trigger: 'item',
+          formatter: '{b}:&nbsp;&nbsp;&nbsp;&nbsp;{d}%'
         },
         series: [
           {
             type: 'pie',
-            radius: ['70%', '90%'],
+            radius: ['60%', '90%'],
             avoidLabelOverlap: false,
             label: {
               show: false,
@@ -601,12 +635,13 @@ export default {
           }
         },
         tooltip: {
-          trigger: 'item'
+          trigger: 'item',
+          formatter: '{b}:&nbsp;&nbsp;&nbsp;&nbsp;{d}%'
         },
         series: [
           {
             type: 'pie',
-            radius: ['70%', '90%'],
+            radius: ['60%', '90%'],
             avoidLabelOverlap: false,
             label: {
               show: false,
@@ -651,8 +686,9 @@ export default {
           type: 'category',
           data: [],
           axisLabel: {
-            interval: 0
-          }
+            interval: 0,
+            rotate:38
+          },
         },
         yAxis: {
           type: 'value',
@@ -689,10 +725,11 @@ export default {
         color: ['#0088FF'],
         xAxis: {
           type: 'category',
+          data: [],
           axisLabel: {
-            interval: 0
+            interval: 0,
+            rotate:38
           },
-          data: []
         },
         yAxis: {
           type: 'value',
@@ -729,10 +766,11 @@ export default {
         color: ['#0088FF'],
         xAxis: {
           type: 'category',
+          data: [],
           axisLabel: {
-            interval: 0
+            interval: 0,
+            rotate:38
           },
-          data: []
         },
         yAxis: {
           type: 'value',
@@ -769,10 +807,11 @@ export default {
         color: ['#0088FF'],
         xAxis: {
           type: 'category',
+          data: [],
           axisLabel: {
-            interval: 0
+            interval: 0,
+            rotate:38
           },
-          data: []
         },
         yAxis: {
           type: 'value',
@@ -809,10 +848,11 @@ export default {
         color: ['#0088FF'],
         xAxis: {
           type: 'category',
+          data: [],
           axisLabel: {
-            interval: 0
+            interval: 0,
+            rotate:38
           },
-          data: []
         },
         yAxis: {
           type: 'value',
@@ -833,7 +873,7 @@ export default {
       chart7: [],
       option7: {
         title: {
-          text: '关键词对应的Top-10观点',
+          text: 'Top-10 Positive Opinions for Keyword',
           x: 'center',
           textStyle: {
             fontSize: 12
@@ -841,7 +881,8 @@ export default {
         },
         grid:
         {
-          bottom: 60,
+          height:160,
+          bottom: 40,
           containLabel: true
         },
         color: ['#FFD384']
@@ -850,8 +891,9 @@ export default {
           type: 'category',
           data: [],
           axisLabel: {
-            interval: 0
-          }
+            interval: 0,
+            rotate:38
+          },
         },
         yAxis: {
           type: 'value'
@@ -1163,7 +1205,7 @@ export default {
       this.getData((val), this.PageSize)
     },
     addClass() {
-      if (this.dialog.form1.form.name == '') { this.$message.error('主题类别名称不能为空'); }
+      if (this.dialog.form1.form.name == '') { this.$message.error("Topic name can't be empty"); }
       else {
         this.$axios({
           url: '/proxy/dashboard/addTopic.htm',
@@ -1210,7 +1252,7 @@ export default {
           let arr = [];
           this.dialog.form2.dynamicValidateForm.domains.forEach((item) => { arr.push(item.value) })
           if (arr.length < 1) {
-            this.$message.error("样本不能为空")
+            this.$message.error("The sample can't be empty")
             return;
           }
           this.$axios({
@@ -1274,8 +1316,8 @@ export default {
       setTimeout(() => {
         this.fullscreenLoading = false;
         this.$notify({
-          title: '成功',
-          message: '训练已完成，请刷新主页',
+          title: 'Success',
+          message: 'Training completed, please refresh the homepage',
           type: 'success'
         });
       }, 2000);
